@@ -733,7 +733,9 @@ def _get_multidict_value(
         )
         or (is_sequence_field(field) and len(value) == 0)
     ):
-        if form_input or field.required:
+        if form_input:  # Handle empty strings as None for form input
+            return None
+        elif field.required:
             return None
         else:
             return deepcopy(field.default)
